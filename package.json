@@ -1,0 +1,15 @@
+{
+  "name": "bun-ts-program",
+  "scripts": {
+    "start": "bun src/main.ts",
+    "build": "bun build --outdir=dist src/main.ts",
+    "compile": "bun build --compile --outfile=bin/main src/main.ts",
+    "lint": "echo 'No linting configured' && exit 1",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "test:watch": "bun test --watch"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.4"
+  }
+}
