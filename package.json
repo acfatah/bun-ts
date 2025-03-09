@@ -15,6 +15,10 @@
     "test:watch": "bun test --watch",
     "precommit": "bun run lint:staged"
   },
+  "dependencies": {
+    "@clack/prompts": "^0.10.1",
+    "ansis": "^3.17.0"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^4.12.0",
     "@types/bun": "^1.2.10",
