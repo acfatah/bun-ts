@@ -12,7 +12,7 @@ Boilerplate for creating a TypeScript program with Bun.
 1. Copy the repository,
 
 ```bash
-bunx tiged acfatah/bun-ts-boilerplate  
+bunx tiged acfatah/bun-ts-boilerplate
 ```
 
 2. Update and install dependencies

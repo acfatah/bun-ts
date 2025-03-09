@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
-    "allowImportingTsExtensions": true,
-    "noEmit": true,
-    "noImplicitAny": true,
     "paths": {
       "~/*": [
         "./src/*"
       ]
     },
+    "allowImportingTsExtensions": true,
     "strict": true,
+    "noImplicitAny": true,
+    "noEmit": true,
     "esModuleInterop": true
   },
   "include": [
