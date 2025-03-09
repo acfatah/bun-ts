@@ -15,7 +15,25 @@ Boilerplate for creating a TypeScript program with Bun.
 bunx tiged acfatah/bun-ts-boilerplate
 ```
 
-2. Update and install dependencies
+2. Initialize git,
+
+```bash
+git init
+```
+
+3. Include the `.vscode` directory in your repository to ensure consistent settings for all developers. Use git add -f `.vscode` to force add it, bypassing any ignore rules.
+
+```bash
+git add -f .vscode
+```
+
+4. Initialize `simple-git-hooks`,
+
+```bash
+rm -rf .git/hooks && npx simple-git-hooks
+```
+
+5. Update and install dependencies
 
 ```bash
 bun update

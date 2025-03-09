@@ -12,12 +12,14 @@
     "lint:inspect": "eslint --inspect-config",
     "typecheck": "tsc --noEmit",
     "test": "bun test",
-    "test:watch": "bun test --watch"
+    "test:watch": "bun test --watch",
+    "precommit": "bun run lint:staged"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.8.1",
     "@types/bun": "^1.2.4",
     "eslint": "^9.22.0",
-    "jiti": "^2.4.2"
+    "jiti": "^2.4.2",
+    "simple-git-hooks": "^2.11.1"
   }
 }

@@ -8,6 +8,7 @@
         "@types/bun": "^1.2.4",
         "eslint": "^9.22.0",
         "jiti": "^2.4.2",
+        "simple-git-hooks": "^2.11.1",
       },
     },
   },
@@ -555,6 +556,8 @@
     "shebang-command": ["shebang-command@2.0.0", "", { "dependencies": { "shebang-regex": "^3.0.0" } }, ""],
 
     "shebang-regex": ["shebang-regex@3.0.0", "", {}, ""],
+
+    "simple-git-hooks": ["simple-git-hooks@2.11.1", "", { "bin": { "simple-git-hooks": "cli.js" } }, "sha512-tgqwPUMDcNDhuf1Xf6KTUsyeqGdgKMhzaH4PAZZuzguOgTl5uuyeYe/8mWgAr6IBxB5V06uqEf6Dy37gIWDtDg=="],
 
     "sisteransi": ["sisteransi@1.0.5", "", {}, ""],
 
