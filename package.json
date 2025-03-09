@@ -2,14 +2,22 @@
   "name": "bun-ts-program",
   "scripts": {
     "start": "bun src/main.ts",
-    "build": "bun build --outdir=dist src/main.ts",
-    "compile": "bun build --compile --outfile=bin/main src/main.ts",
-    "lint": "echo 'No linting configured' && exit 1",
+    "build": "bun build --target=node --outdir=dist --entry-naming=[name].mjs src/main.ts",
+    "compile": "bun build --compile --target=bun-linux-x64 --outfile=dist/main src/main.ts",
+    "compile:arm": "bun build --compile --target=bun-linux-armx64 --outfile=dist/main src/main.ts",
+    "compile:windows": "bun build --compile --target=bun-windows-x64 --outfile=dist/main.exe src/main.ts",
+    "lint": "eslint .",
+    "lint:staged": "eslint --pass-on-no-patterns --no-warn-ignored $(git diff --cached --name-only --diff-filter=d)",
+    "lint:fix": "eslint . --fix",
+    "lint:inspect": "eslint --inspect-config",
     "typecheck": "tsc --noEmit",
     "test": "bun test",
     "test:watch": "bun test --watch"
   },
   "devDependencies": {
-    "@types/bun": "^1.2.4"
+    "@antfu/eslint-config": "^4.8.1",
+    "@types/bun": "^1.2.4",
+    "eslint": "^9.22.0",
+    "jiti": "^2.4.2"
   }
 }
