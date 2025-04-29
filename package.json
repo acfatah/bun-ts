@@ -1,5 +1,5 @@
 {
-  "name": "bun-ts-program",
+  "name": "bun-ts",
   "scripts": {
     "start": "bun src/main.ts",
     "build": "bun build --target=node --outdir=dist --entry-naming=[name].mjs src/main.ts",
