@@ -37,7 +37,7 @@ git add -f .vscode
 4. Initialize `simple-git-hooks`,
 
 ```bash
-rm -rf .git/hooks && npx simple-git-hooks
+rm -rf .git/hooks && bunx simple-git-hooks
 ```
 
 5. Update and install dependencies
