@@ -1,3 +1,0 @@
-{
-  "pre-commit": "bun run precommit"
-}
