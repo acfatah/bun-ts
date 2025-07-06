@@ -1,5 +1,8 @@
 name: Bun.sh CI
 
+permissions:
+  contents: read
+
 on:
   push:
     branches:
