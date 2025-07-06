@@ -3,7 +3,7 @@
   "explorer.fileNesting.patterns": {
     "eslint.config": ".eslint*, eslint*",
     "package.json": "package-lock.json, bun*, pnpm*, .yarnrc*, yarn*",
-    "README": "README*, LICENSE*, CHANGELOG*",
+    "README.md": "README*, LICENSE*, CHANGELOG*",
     "tsconfig.json": "tsconfig.*.json, env.d.ts"
   },
 
