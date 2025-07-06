@@ -1,6 +1,8 @@
 import process from 'node:process'
 import { parseArgs } from 'node:util'
 
+const argv = typeof Bun !== 'undefined' ? Bun.argv : process.argv
+
 interface Options {
   help?: boolean
   example?: string
@@ -11,7 +13,7 @@ let args: string[] = []
 
 try {
   const { values, positionals } = parseArgs({
-    args: Bun.argv,
+    args: argv,
     strict: true,
     allowPositionals: true,
     options: {
@@ -39,7 +41,7 @@ catch (error: any) {
   process.exit(1)
 }
 
-export function main() {
+function main() {
   if (options.help) {
     console.log('This is some help message.')
 
