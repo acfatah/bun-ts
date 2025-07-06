@@ -1,11 +1,11 @@
 {
   "name": "bun-ts",
   "scripts": {
-    "start": "bun src/main.ts",
-    "build": "bun build --target=node --outdir=dist --entry-naming=[name].mjs src/main.ts",
-    "compile": "bun build --compile --target=bun-linux-x64 --outfile=dist/main src/main.ts",
-    "compile:arm": "bun build --compile --target=bun-linux-armx64 --outfile=dist/main src/main.ts",
-    "compile:windows": "bun build --compile --target=bun-windows-x64 --outfile=dist/main.exe src/main.ts",
+    "start": "bun src/index.ts",
+    "build": "bun build --target=node --outdir=dist --entry-naming=[name].mjs src/index.ts",
+    "compile": "bun build --compile --target=bun-linux-x64 --outfile=dist/index src/index.ts",
+    "compile:arm": "bun build --compile --target=bun-linux-armx64 --outfile=dist/index src/index.ts",
+    "compile:windows": "bun build --compile --target=bun-windows-x64 --outfile=dist/index.exe src/index.ts",
     "lint": "bunx --bun eslint",
     "lint:changed": "bunx --bun eslint --pass-on-no-patterns --no-warn-ignored $(git diff --name-only --diff-filter=d HEAD)",
     "lint:staged": "bunx --bun eslint --pass-on-no-patterns --no-warn-ignored $(git diff --cached --name-only --diff-filter=d)",
