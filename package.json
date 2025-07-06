@@ -1,8 +1,18 @@
 {
   "name": "bun-ts",
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.mjs"
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "start": "bun src/index.ts",
-    "build": "bun build --target=node --outdir=dist --entry-naming=[name].mjs src/index.ts",
+    "build": "bun run script/build.ts",
     "compile": "bun build --compile --target=bun-linux-x64 --outfile=dist/index src/index.ts",
     "compile:arm": "bun build --compile --target=bun-linux-armx64 --outfile=dist/index src/index.ts",
     "compile:windows": "bun build --compile --target=bun-windows-x64 --outfile=dist/index.exe src/index.ts",
@@ -21,6 +31,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "^4.16.2",
     "@types/bun": "^1.2.17",
+    "bun-plugin-dts": "^0.3.0",
     "eslint": "^9.30.1",
     "eslint-plugin-format": "^1.0.1",
     "jiti": "^2.4.2",
