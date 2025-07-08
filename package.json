@@ -28,6 +28,9 @@
     "test:coverage": "bun test --coverage --coverage-reporter=lcov",
     "precommit": "bun run lint:staged"
   },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^4.16.2",
     "@commitlint/cli": "^19.8.1",
