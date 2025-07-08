@@ -9,6 +9,16 @@ export default antfu(
     rules: {
       'no-console': 'off',
       'sort-imports': 'off',
+
+      'style/padding-line-between-statements': [
+        'error',
+        {
+          blankLine: 'always',
+          prev: '*',
+          next: 'return',
+        },
+      ],
+
       'perfectionist/sort-imports': [
         'error',
         {
