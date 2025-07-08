@@ -30,6 +30,8 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.16.2",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
     "@types/bun": "^1.2.17",
     "bun-plugin-dts": "^0.3.0",
     "eslint": "^9.30.1",
@@ -38,6 +40,7 @@
     "simple-git-hooks": "^2.13.0"
   },
   "simple-git-hooks": {
+    "commit-msg": "bunx --bun commitlint --edit",
     "pre-commit": "bun precommit"
   }
 }
