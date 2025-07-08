@@ -37,6 +37,11 @@ jobs:
         run: |
           bun install
 
+      - id: lint
+        name: Lint Source
+        run: |
+          bun lint
+
       - id: test
         name: Run test
         run: |
