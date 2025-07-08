@@ -22,6 +22,7 @@
     "lint:fix-staged": "bunx --bun eslint --fix --pass-on-no-patterns --no-warn-ignored $(git diff --cached --name-only --diff-filter=d)",
     "lint:fix": "bunx --bun eslint --fix",
     "lint:inspect": "bunx --bun eslint --inspect-config",
+    "lint:commit-message": "bunx --bun commitlint --edit",
     "typecheck": "bunx --bun tsc --noEmit",
     "test": "bun test",
     "test:watch": "bun test --watch",
@@ -43,7 +44,7 @@
     "simple-git-hooks": "^2.13.0"
   },
   "simple-git-hooks": {
-    "commit-msg": "bunx --bun commitlint --edit",
+    "commit-msg": "bun lint:commit-message",
     "pre-commit": "bun precommit"
   }
 }
