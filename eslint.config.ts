@@ -8,7 +8,6 @@ export default antfu(
   {
     rules: {
       'no-console': 'off',
-      'sort-imports': 'off',
 
       'style/padding-line-between-statements': [
         'error',
@@ -19,6 +18,7 @@ export default antfu(
         },
       ],
 
+      'sort-imports': 'off',
       'perfectionist/sort-imports': [
         'error',
         {
