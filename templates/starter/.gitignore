@@ -1,5 +1,3 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies (bun install)
 node_modules
 
@@ -36,9 +34,3 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 
 # vscode IDE
 .vscode
-
-# keep vscode IDE config for templates
-!templates/*/.vscode
-
-# we dont keep template's lock file
-templates/*/bun.lock

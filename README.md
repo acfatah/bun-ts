@@ -1,4 +1,4 @@
-# Bun TypeScript
+# Bun TypeScript Boilerplates / Templates
 
 <p>
   <a href="https://bun.sh">
@@ -15,36 +15,39 @@
       src="https://img.shields.io/github/last-commit/acfatah/bun-ts?display_timestamp=committer&style=flat-square"></a>
 </p>
 
-Boilerplate for creating a TypeScript program with [Bun](https://bun.sh).
+This repository hold boilerplates or templates for creating a TypeScript program with [Bun](https://bun.sh).
 
 ## Usage
 
-1. Copy the repository,
+To create a project using this template, make a new directory with your chosen project name, navigate into it, then run the following command:
 
 ```bash
-bunx tiged acfatah/bun-ts newproject
+bunx --bun tiged acfatah/bun-ts/templates/starter
 ```
 
-2. Initialize git,
-
-```bash
-git init
-```
-
-3. Include the `.vscode` directory in your repository to ensure consistent settings for all developers. Use git add -f `.vscode` to force add it, bypassing any ignore rules.
-
-```bash
-git add -f .vscode
-```
-
-4. Initialize `simple-git-hooks`,
-
-```bash
-rm -rf .git/hooks && bunx simple-git-hooks
-```
-
-5. Update and install dependencies
+Afterwards, you can update and install the latest dependencies with:
 
 ```bash
 bun update
 ```
+
+Look under the `templates` directory to see the other available templates.
+Replace `/starter` with the template that you want to use.
+
+## Post-install Scripts
+
+By default, `bun` will block all post-install scripts, including `simple-git-hooks`.
+
+To list all blocked scripts, you can run:
+
+```bash
+bun pm unstrusted
+```
+
+To execute them, run
+
+```bash
+bun pm trust --all
+```
+
+Alternatively, you can specify each package name individually.
