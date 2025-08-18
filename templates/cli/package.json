@@ -35,7 +35,8 @@
     "@typescript/native-preview": "^7.0.0-dev.20250710.1"
   },
   "dependencies": {
-    "commander": "^14.0.0"
+    "commander": "^14.0.0",
+    "consola": "^3.4.2"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.19.0",
@@ -43,7 +44,6 @@
     "@commitlint/config-conventional": "^19.8.1",
     "@types/bun": "^1.2.20",
     "bun-plugin-dts": "^0.3.0",
-    "consola": "^3.4.2",
     "eslint": "^9.33.0",
     "eslint-plugin-format": "^1.0.1",
     "jiti": "^2.5.1",
