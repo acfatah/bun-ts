@@ -23,7 +23,7 @@
     "lint:inspect": "bunx --bun eslint --inspect-config",
     "lint:commit-message": "bunx --bun commitlint --edit",
     "format": "bunx --bun eslint --fix",
-    "format:staged": "bunx --bun eslint --fix --pass-on-no-patterns --no-warn-ignored $(git diff --cached --name-only --diff-filter=d)",
+    "format:staged": "staged_files=$(git diff --cached --name-only --diff-filter=d); bunx --bun eslint --fix --pass-on-no-patterns --no-warn-ignored $staged_files && git add $staged_files",
     "typecheck": "tsgo --noEmit",
     "test": "bun test",
     "test:watch": "bun test --watch",
