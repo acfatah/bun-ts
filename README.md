@@ -17,6 +17,12 @@
 
 This repository hold boilerplates or templates for creating a TypeScript program with [Bun](https://bun.sh).
 
+## Features
+
+- Preinstalled with [eslint][1] and [@antfu/eslint-config][2].
+- Predefined common scripts like `format`, `lint`, etc.
+- Predifined common vscode settings and extensions.
+
 ## Usage
 
 To create a project using this template, make a new directory with your chosen project name, navigate into it, then run the following command:
@@ -51,3 +57,6 @@ bun pm trust --all
 ```
 
 Alternatively, you can specify each package name individually.
+
+[1]: https://eslint.org
+[2]: https://github.com/antfu/eslint-config
