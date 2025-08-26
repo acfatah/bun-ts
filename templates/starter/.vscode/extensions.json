@@ -1,5 +1,6 @@
 {
   "recommendations": [
+    "codista.vscode-autosave",
     "dbaeumer.vscode-eslint",
     "TypeScriptTeam.native-preview"
   ]
