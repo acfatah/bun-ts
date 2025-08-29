@@ -3,6 +3,9 @@
   "type": "module",
   "private": true,
   "module": "index.ts",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
   "scripts": {
     "start": "bun src/index.ts",
     "format": "changed_files=$(git diff --name-only --diff-filter=d HEAD); bunx --bun eslint --fix $changed_files",
