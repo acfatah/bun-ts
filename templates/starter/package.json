@@ -34,7 +34,7 @@
     "release": "bunx --bun bumpp --excute=\"bun install\""
   },
   "peerDependencies": {
-    "typescript": "^5"
+    "typescript": "^5.8.2"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.19.0",
