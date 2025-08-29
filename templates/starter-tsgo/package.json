@@ -1,5 +1,5 @@
 {
-  "name": "starter",
+  "name": "starter-tsgo",
   "exports": {
     "types": "./dist/index.d.ts",
     "import": "./dist/index.mjs"
@@ -34,7 +34,7 @@
     "release": "bunx --bun bumpp --excute=\"bun install\""
   },
   "peerDependencies": {
-    "typescript": "^5"
+    "@typescript/native-preview": "^7.0.0-dev.20250710.1"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.19.0",
