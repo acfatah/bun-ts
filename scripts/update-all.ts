@@ -21,9 +21,8 @@ async function main() {
           stderr: 'ignore',
           onExit(_proc, exitCode, _signalCode, error) {
             if (exitCode) {
-              throw new Error(
-                error?.message || `Update failed with exit code ${exitCode}`,
-              )
+              console.error(`An error has occurred while updating ${dir} template.`)
+              console.error(error)
             }
           },
         },
@@ -36,8 +35,6 @@ async function main() {
 
   Promise.all(updatePromises).then(() => {
     console.log('All updates completed.')
-  }).catch((error) => {
-    console.error('An error occurred:', error)
   })
 }
 
