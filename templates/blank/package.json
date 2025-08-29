@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "bun src/index.ts",
-    "format": "changed_files=$(git diff --name-only --diff-filter=d HEAD); bunx --bun eslint --fix $changed_files",
+    "format": "changed_files=$(git diff --name-only --diff-filter=d HEAD); bunx --bun eslint --fix --no-warn-ignored $changed_files",
     "format:staged": "staged_files=$(git diff --cached --name-only --diff-filter=d); bunx --bun eslint --fix --pass-on-no-patterns --no-warn-ignored $staged_files && git add $staged_files",
     "test": "bun test",
     "test:watch": "bun test --watch"
