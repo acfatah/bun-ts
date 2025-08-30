@@ -2,6 +2,7 @@
   "recommendations": [
     "codista.vscode-autosave",
     "dbaeumer.vscode-eslint",
-    "TypeScriptTeam.native-preview"
+    "TypeScriptTeam.native-preview",
+    "usernamehw.errorlens"
   ]
 }
