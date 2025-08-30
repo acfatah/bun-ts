@@ -1,41 +1,68 @@
 #!/usr/bin/env bun
 
-import { $, spawn } from 'bun'
+import type { Dirent } from 'node:fs'
+import Bun from 'bun'
+import { join } from 'pathe'
+import { readDir } from '../utils'
+
+async function updateTemplate(dirent: Dirent): Promise<void> {
+  const templatePath = join(dirent.parentPath, dirent.name)
+  const versionFile = join(templatePath, '.bun-version')
+
+  // Update .bun-version file
+  await Bun.$`bun --version > ${versionFile}`
+
+  // Update packages
+  console.log(`Updating "${templatePath}" template...`)
+
+  const proc = Bun.spawn(
+    ['bun', 'update'],
+    {
+      cwd: templatePath,
+      stdout: 'ignore',
+      stderr: 'pipe',
+    },
+  )
+
+  const exitCode = await proc.exited
+
+  if (exitCode) {
+    const errorMessage = await proc.stderr?.text()
+    console.group(`Error updating "${templatePath}":`)
+    console.error(errorMessage)
+    console.groupEnd()
+  }
+  else {
+    console.log(`Done updating "${templatePath}".`)
+  }
+}
 
 async function main() {
-  const dirs = (await $`ls templates`.text()).split('\n').filter(Boolean)
+  // Update .bun-version file
+  await Bun.$`bun --version > .bun-version`
 
-  const updatePromises = dirs.map((dir) => {
-    return (async () => {
-      console.log(`Updating "${dir}" template...`)
+  const dir = await readDir('templates', {
+    withFileTypes: true,
+  }) as Dirent[]
 
-      // Update .bun-version file
-      await $`bun --version > templates/${dir}/.bun-version`
+  const tasks: Promise<void>[] = []
 
-      // Update packages
-      const proc = spawn(
-        ['bun', 'update'],
-        {
-          cwd: `templates/${dir}`,
-          stdout: 'ignore',
-          stderr: 'ignore',
-          onExit(_proc, exitCode, _signalCode, error) {
-            if (exitCode) {
-              console.error(`An error has occurred while updating ${dir} template.`)
-              console.error(error)
-            }
-          },
-        },
-      )
+  for (const dirent of dir) {
+    if (!dirent.isDirectory())
+      continue
 
-      await proc.exited
-      console.log(`Done updating "${dir}".`)
-    })()
-  })
+    tasks.push(
+      updateTemplate(dirent),
+    )
+  }
 
-  Promise.all(updatePromises).then(() => {
+  try {
+    await Promise.all(tasks)
     console.log('All updates completed.')
-  })
+  }
+  catch (error) {
+    console.error('An error occurred during the update:', error)
+  }
 }
 
 main()
