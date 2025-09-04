@@ -40,6 +40,17 @@ bun update
 Look under the `templates` directory to see the other available templates.
 Replace `/starter` with the template that you want to use.
 
+## Common Files
+
+Common files that are similar across templates are stored under `templates/_`.
+Optionally you may include them with the same command as above.
+
+Example to copy `build.ts` instead of the entire scripts directory:
+
+```bash
+bunx --bun get-file acfatah/bun-ts/templates/_/scripts/build.ts
+```
+
 ## Post-install Scripts
 
 By default, `bun` will block all post-install scripts, including `simple-git-hooks`.
