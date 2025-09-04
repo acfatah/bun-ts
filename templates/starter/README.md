@@ -44,3 +44,21 @@ rm -rf .git/hooks && bunx --bun simple-git-hooks
 ```bash
 git commit -m --no-verify "Initial commit"
 ```
+
+## Compile Scripts
+
+Optionally add the following compile scripts as needed.
+
+```bash
+    "compile": "bun build --compile --target=bun-linux-x64 --outfile=dist/index src/index.ts",
+    "compile:arm": "bun build --compile --target=bun-linux-armx64 --outfile=dist/index src/index.ts",
+    "compile:windows": "bun build --compile --target=bun-windows-x64 --outfile=dist/index.exe src/index.ts",
+```
+
+## Github Actions
+
+Optionally add github actions by running the following command:
+
+```bash
+bunx --bun tiged acfatah/bun-ts/templates/_/.github
+```
