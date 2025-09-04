@@ -8,10 +8,10 @@
   },
   "scripts": {
     "dev": "bunx --bun vite",
-    "build": "bunx --bun run-p type-check \"build-only {@}\" --",
+    "build": "bunx --bun run-p typecheck \"build-only {@}\" --",
     "preview": "bunx --bun vite preview",
     "build-only": "bunx --bun vite build",
-    "type-check": "bunx --bun vue-tsc --build",
+    "typecheck": "bunx --bun vue-tsc --build",
     "lint": "bunx --bun eslint",
     "format": "changed_files=$(git diff --name-only --diff-filter=d HEAD); bunx --bun eslint --fix --no-warn-ignored $changed_files"
   },

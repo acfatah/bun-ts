@@ -1,5 +1,6 @@
 {
   "name": "starter-tsgo",
+  "version": "0.0.0",
   "exports": {
     "types": "./dist/index.d.ts",
     "import": "./dist/index.mjs"
