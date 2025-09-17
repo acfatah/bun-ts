@@ -54,5 +54,7 @@
     "postcss"
   ],
 
+  // To use tsgo, install it as peer dependency, `bun add --peer @typescript/native-preview`.
+  // See: https://github.com/microsoft/typescript-go
   "typescript.experimental.useTsgo": true
 }
