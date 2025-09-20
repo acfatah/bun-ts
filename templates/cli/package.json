@@ -39,17 +39,17 @@
     "@typescript/native-preview": "^7.0.0-dev.20250710.1"
   },
   "dependencies": {
-    "commander": "^14.0.0",
+    "commander": "^14.0.1",
     "consola": "^3.4.2"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.19.0",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
-    "@types/bun": "^1.2.21",
+    "@types/bun": "^1.2.22",
     "bun-plugin-dts": "^0.3.0",
-    "eslint": "^9.34.0",
-    "eslint-plugin-format": "^1.0.1",
+    "eslint": "^9.36.0",
+    "eslint-plugin-format": "^1.0.2",
     "jiti": "^2.5.1",
     "simple-git-hooks": "^2.13.1"
   },
