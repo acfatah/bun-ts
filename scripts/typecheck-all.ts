@@ -88,6 +88,10 @@ async function main() {
     if (!dirent.isDirectory())
       continue
 
+    // skip _ directory
+    if (dirent.name === '_')
+      continue
+
     const appPath = join(dirent.parentPath, dirent.name)
     const scriptName = await getScriptNameIfExists(appPath)
 
