@@ -8,6 +8,8 @@
  *   --dry           Print actions without writing files
  *   --force         Overwrite existing files even if different
  *   --verbose       Print more info
+ *   --no-color      Disable colored output (or set NO_COLOR)
+ *   --color         Force colored output even if not TTY (or set FORCE_COLOR)
  */
 
 import type { Dirent } from 'node:fs'
@@ -26,14 +28,38 @@ const { values } = parseArgs({
   args: argv,
   strict: true,
   options: {
-    dry: { type: 'boolean', default: false },
-    force: { type: 'boolean', default: false },
-    verbose: { type: 'boolean', default: false },
+    'dry': { type: 'boolean', default: false },
+    'force': { type: 'boolean', default: false },
+    'verbose': { type: 'boolean', default: false },
+    'no-color': { type: 'boolean', default: false },
+    'noColor': { type: 'boolean', default: false },
+    'color': { type: 'boolean', default: false },
   },
 })
 const DRY = Boolean(values.dry)
 const FORCE = Boolean(values.force)
 const VERBOSE = Boolean(values.verbose)
+const NO_COLOR_FLAG = Boolean(values['no-color'] || values.noColor)
+const FORCE_COLOR_FLAG = Boolean(values.color)
+const NO_COLOR_ENV = Boolean(process.env.NO_COLOR)
+const FORCE_COLOR_ENV = Boolean(process.env.FORCE_COLOR)
+const isStdoutTTY = Boolean((process.stdout as any)?.isTTY)
+const COLOR_ENABLED = (!NO_COLOR_FLAG && !NO_COLOR_ENV) && (FORCE_COLOR_FLAG || FORCE_COLOR_ENV || isStdoutTTY)
+
+const COLORS = {
+  red: '\x1B[31m',
+  green: '\x1B[32m',
+  yellow: '\x1B[33m',
+  gray: '\x1B[90m',
+  reset: '\x1B[0m',
+} as const
+
+function color(text: string, c: keyof Omit<typeof COLORS, 'reset'>) {
+  if (!COLOR_ENABLED)
+    return text
+
+  return `${COLORS[c]}${text}${COLORS.reset}`
+}
 
 function shouldIgnorePath(p: string, extraDirs: string[] = []) {
   const dirs = [
@@ -139,7 +165,7 @@ async function main() {
       const ignoreDirs = dirIgnores.get(target) || []
       if (shouldIgnorePath(join(target, rel), ignoreDirs)) {
         if (VERBOSE)
-          console.log(`[ignored] ${rel} -> ${target.split(sep).at(-1)}`)
+          console.log(color(`[ignored] ${rel} -> ${target.split(sep).at(-1)}`, 'gray'))
         continue
       }
 
@@ -157,18 +183,18 @@ async function main() {
         if (same) {
           skipped++
           if (VERBOSE)
-            console.log(`[skip-same] ${rel} -> ${target.split(sep).at(-1)}`)
+            console.log(color(`[skip-same] ${rel} -> ${target.split(sep).at(-1)}`, 'yellow'))
           continue
         }
         if (!FORCE) {
-          console.warn(`[conflict] ${rel} differs in ${target.split(sep).at(-1)}. Use --force to overwrite.`)
+          console.warn(color(`[conflict] ${rel} differs in ${target.split(sep).at(-1)}. Use --force to overwrite.`, 'red'))
           conflicts++
           continue
         }
       }
 
       if (DRY) {
-        console.log(`[dry] copy ${rel} -> ${target.split(sep).at(-1)}`)
+        console.log(color(`[dry] copy ${rel} -> ${target.split(sep).at(-1)}`, 'gray'))
         copied++
         continue
       }
@@ -176,12 +202,13 @@ async function main() {
       await ensureDir(dest.split(sep).slice(0, -1).join(sep))
       const data = await fsReadFile(src)
       await bunWriteFile(dest, data)
-      console.log(`[copied] ${rel} -> ${target.split(sep).at(-1)}`)
+      console.log(color(`[copied] ${rel} -> ${target.split(sep).at(-1)}`, 'green'))
       copied++
     }
   }
 
-  console.log(`Done. Considered: ${considered}, Copied: ${copied}, Skipped: ${skipped}, Conflicts: ${conflicts}`)
+  const summary = `${color('Done.', 'gray')} Considered: ${considered}, ${color(`Copied: ${copied}`, 'green')}, ${color(`Skipped: ${skipped}`, 'yellow')}, ${color(`Conflicts: ${conflicts}`, 'red')}`
+  console.log(summary)
 }
 
 main().catch((err) => {
