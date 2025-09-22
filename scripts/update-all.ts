@@ -3,7 +3,7 @@
 import type { Dirent } from 'node:fs'
 import Bun from 'bun'
 import { join } from 'pathe'
-import { readDir } from '../utils'
+import { readDir } from './utils'
 
 async function updateTemplate(dirent: Dirent): Promise<void> {
   const path = join(dirent.parentPath, dirent.name)
