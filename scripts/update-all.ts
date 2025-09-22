@@ -1,19 +1,29 @@
 #!/usr/bin/env bun
 
+/**
+ * Script to update all Bun template in the "templates" directory.
+ */
+
 import type { Dirent } from 'node:fs'
 import Bun from 'bun'
 import { join } from 'pathe'
 import { readDir } from './utils'
 
-async function updateTemplate(dirent: Dirent): Promise<void> {
-  const path = join(dirent.parentPath, dirent.name)
-  const versionFile = join(path, '.bun-version')
+const TARGET_DIR = 'templates'
 
-  // Update .bun-version file
+/**
+ * Update dependencies in the given directory.
+ */
+async function updateDeps(target: string | Dirent): Promise<void> {
+  const path = typeof target === 'string' ? target : join(target.parentPath, target.name)
+  const versionFile = join(path, '.bun-version')
+  const pathName = path === '.' ? 'root' : `"${path}"`
+
+  // Update .bun-version file to follow the Bun version on the system
   await Bun.$`bun --version > ${versionFile}`
 
   // Update packages
-  console.log(`Updating "${path}" template...`)
+  console.log(`Updating "${pathName}" app...`)
 
   const proc = Bun.spawn(
     ['bun', 'update'],
@@ -32,9 +42,9 @@ async function updateTemplate(dirent: Dirent): Promise<void> {
       proc.stdout ? new Response(proc.stdout).text() : Promise.resolve(''),
     ])
 
+    console.error(`ERROR: Failed to update "${path}" (exit ${exitCode})`)
+    console.group(`Error details for "${path}" (exit ${exitCode}):`)
     const message = [stderrText, stdoutText].filter(Boolean).join('\n')
-
-    console.group(`Error updating "${path}" (exit ${exitCode}):`)
     if (message) {
       for (const line of message.split(/\r?\n/)) {
         console.error(line)
@@ -48,15 +58,16 @@ async function updateTemplate(dirent: Dirent): Promise<void> {
     console.groupEnd()
   }
   else {
-    console.log(`Done updating "${path}".`)
+    console.log(`Done updating "${pathName}".`)
   }
 }
 
 async function main() {
-  // Update .bun-version file
+  // Update root directory
   await Bun.$`bun --version > .bun-version`
+  await updateDeps('.')
 
-  const dir = await readDir('templates', {
+  const dir = await readDir(TARGET_DIR, {
     withFileTypes: true,
   }) as Dirent[]
 
@@ -67,7 +78,7 @@ async function main() {
       continue
 
     tasks.push(
-      updateTemplate(dirent),
+      updateApp(dirent),
     )
   }
 
