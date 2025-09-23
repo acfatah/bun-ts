@@ -8,8 +8,12 @@
  *   --dry           Print actions without writing files
  *   --force         Overwrite existing files even if different
  *   --verbose       Print more info
+ *   --dir <path>    Only copy files within this subdirectory of _ (e.g. src/middleware)
  *   --no-color      Disable colored output (or set NO_COLOR)
  *   --color         Force colored output even if not TTY (or set FORCE_COLOR)
+ *
+ * You can also pass the subdirectory as a positional argument:
+ *   bun scripts/copy-common-to-templates.ts src/middleware
  */
 
 import type { Dirent } from 'node:fs'
@@ -24,13 +28,15 @@ const TEMPLATES_DIR = 'templates'
 const BASE_DIR = join(TEMPLATES_DIR, '_')
 
 const argv = Array.isArray((Bun as any)?.argv) ? (Bun as any).argv.slice(2) : process.argv.slice(2)
-const { values } = parseArgs({
+const { values, positionals } = parseArgs({
   args: argv,
   strict: true,
+  allowPositionals: true,
   options: {
     'dry': { type: 'boolean', default: false },
     'force': { type: 'boolean', default: false },
     'verbose': { type: 'boolean', default: false },
+    'dir': { type: 'string' },
     'no-color': { type: 'boolean', default: false },
     'noColor': { type: 'boolean', default: false },
     'color': { type: 'boolean', default: false },
@@ -45,6 +51,16 @@ const NO_COLOR_ENV = Boolean(process.env.NO_COLOR)
 const FORCE_COLOR_ENV = Boolean(process.env.FORCE_COLOR)
 const isStdoutTTY = Boolean((process.stdout as any)?.isTTY)
 const COLOR_ENABLED = (!NO_COLOR_FLAG && !NO_COLOR_ENV) && (FORCE_COLOR_FLAG || FORCE_COLOR_ENV || isStdoutTTY)
+
+// Optional subdirectory under BASE_DIR to limit the copy scope
+const RAW_DIR = (typeof values.dir === 'string' && values.dir.length > 0)
+  ? values.dir
+  : (((positionals as any)?.[0] as string | undefined) || '')
+
+// Normalize common forms like leading './' or trailing '/'
+const SUB_DIR = RAW_DIR
+  ? RAW_DIR.replace(/^\.(?:\/|$)/, '').replace(/^\/+/, '').replace(/\/+$/, '')
+  : ''
 
 const COLORS = {
   red: '\x1B[31m',
@@ -125,6 +141,13 @@ async function filesEqual(aPath: string, bPath: string): Promise<boolean> {
 }
 
 async function main() {
+  // Resolve source root: either BASE_DIR or a subdirectory within it
+  const SOURCE_ROOT = SUB_DIR ? join(BASE_DIR, SUB_DIR) : BASE_DIR
+  const relCheck = relative(BASE_DIR, SOURCE_ROOT)
+
+  if (relCheck.startsWith('..'))
+    throw new Error(`--dir must point inside '_' (templates/_). Got: ${SUB_DIR}`)
+
   // Find target template dirs (exclude _)
   const dirs = (await readdir(TEMPLATES_DIR, { withFileTypes: true }) as Dirent[])
     .filter(d => d.isDirectory())
@@ -148,8 +171,8 @@ async function main() {
     dirIgnores.set(dir, dirsToIgnore)
   }
 
-  // Source files from BASE_DIR (_)
-  const baseFiles = await walkFiles(BASE_DIR)
+  // Source files from BASE_DIR (_) or a subdirectory when --dir provided
+  const baseFiles = await walkFiles(SOURCE_ROOT)
 
   let considered = 0
   let copied = 0
@@ -157,6 +180,7 @@ async function main() {
   let conflicts = 0
 
   for (const src of baseFiles) {
+  // Keep relative to BASE_DIR so paths are preserved across templates
     const rel = relative(BASE_DIR, src)
     considered++
 
