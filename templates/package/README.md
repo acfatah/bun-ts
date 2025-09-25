@@ -15,17 +15,17 @@ Boilerplate for creating a TypeScript library or package on [npm](https://www.np
 
 ## Usage
 
-1. Update `package.json` and install dependencies
+1. Update the following information in `package.json` and install dependencies
 
-- name
-- version
-- description
-- author
-- license
-- homepage
-- repository
-- bugs
-- publishConfig
+- [ ] name
+- [ ] version
+- [ ] description
+- [ ] author
+- [ ] license
+- [ ] homepage
+- [ ] repository
+- [ ] bugs
+- [ ] publish configurations in `.github/workflows/publish.yml`
 
 ```bash
 bun update
@@ -53,4 +53,18 @@ rm -rf .git/hooks && bunx --bun simple-git-hooks
 
 ```bash
 git commit -m --no-verify "Initial commit"
+```
+
+To build the package, run:
+
+```bash
+bun run build
+```
+
+**Note**: the `run` is required here so bun won't run the default build command.
+
+To release a new version, run:
+
+```bash
+bun release
 ```
