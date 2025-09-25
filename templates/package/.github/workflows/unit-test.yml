@@ -47,9 +47,10 @@ jobs:
         run: |
           bun test:coverage
 
-    #   - id: coverage-report
-    #     name: Upload coverage report
-    #     uses: qltysh/qlty-action/coverage@v2
-    #     with:
-    #       token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
-    #       files: coverage/lcov.info
+      # # https://docs.qlty.sh/coverage/quickstart
+      # - id: coverage-report
+      #   name: Upload coverage report
+      #   uses: qltysh/qlty-action/coverage@v2
+      #   with:
+      #     token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
+      #     files: coverage/lcov.info
