@@ -26,7 +26,7 @@ async function updateDeps(target: string | Dirent): Promise<void> {
   // Update packages
   console.log(`Updating "${pathName}"`)
 
-  const proc = Bun.spawn(['bun', 'update'], {
+  const proc = Bun.spawn(['bun', 'update', '--latest'], {
     cwd: path,
     // Avoid backpressure: stream directly to terminal
     stdout: 'inherit',
