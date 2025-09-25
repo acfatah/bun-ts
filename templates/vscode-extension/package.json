@@ -1,0 +1,88 @@
+{
+  "publisher": "acfatah",
+  "name": "vscode-extension",
+  "displayName": "VSCode Extension",
+  "version": "0.0.0",
+  "description": "A VSCode extension powered by Bun and TypeScript.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/acfatah/vscode-extension.git"
+  },
+  "bugs": {
+    "url": "https://github.com/acfatah/vscode-extension/issues"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "icon": "res/icon.png",
+  "engines": {
+    "vscode": "^1.37.0"
+  },
+  "activationEvents": [
+    "*"
+  ],
+  "configuration": {
+    "type": "object",
+    "title": "VSCode Extension Configuration",
+    "properties": {
+      "yourExtension.minLength": {
+        "type": "number",
+        "default": 4,
+        "description": "Example setting for minimum length (number)."
+      },
+      "yourExtension.enabledLanguages": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "default": [],
+        "description": "Example setting for enabled languages (array of strings)."
+      },
+      "yourExtension.includeAutomatically": {
+        "type": "boolean",
+        "default": true,
+        "description": "Example setting to include automatically (boolean)."
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "bun run compile",
+    "compile": "tsc -p ./",
+    "lint": "bunx --bun eslint",
+    "lint:changed": "{ git diff --name-only -z --diff-filter=d --relative HEAD; git ls-files -z --others --exclude-standard -- ':./'; } | xargs -0 -r bunx --bun eslint --pass-on-no-patterns --no-warn-ignored",
+    "lint:staged": "bunx --bun eslint --pass-on-no-patterns --no-warn-ignored $(git diff --relative --cached --name-only --diff-filter=d)",
+    "lint:inspect": "bunx --bun eslint --inspect-config",
+    "lint:commit-message": "bunx --bun commitlint --edit",
+    "format": "bunx --bun eslint --fix",
+    "format:changed": "{ git diff --name-only -z --diff-filter=d --relative HEAD; git ls-files -z --others --exclude-standard -- ':./'; } | xargs -0 -r bunx --bun eslint --fix --no-warn-ignored",
+    "format:staged": "staged_files=$(git diff --relative --cached --name-only --diff-filter=d); bunx --bun eslint --fix --pass-on-no-patterns --no-warn-ignored $staged_files && git add $staged_files",
+    "typecheck": "tsc --noEmit",
+    "typecheck:tsgo": "tsgo --noEmit",
+    "pretest": "bun run compile && bun run lint",
+    "test": "bun ./out/test/run-test.js",
+    "test:watch": "tsc -watch -p ./"
+  },
+  "peerDependencies": {
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^5.4.1",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@types/bun": "latest",
+    "@types/glob": "^7.1.1",
+    "@types/mocha": "^9.1.0",
+    "@types/node": "^12.11.7",
+    "@types/vscode": "^1.37.0",
+    "@typescript-eslint/eslint-plugin": "^5.17.0",
+    "@typescript-eslint/parser": "^5.17.0",
+    "eslint": "^9.36.0",
+    "eslint-plugin-format": "^1.0.2",
+    "glob": "^7.1.4",
+    "jiti": "^2.5.1",
+    "mocha": "^9.2.2",
+    "typescript": "^4.1.3",
+    "vscode-test": "^1.0.2"
+  }
+}

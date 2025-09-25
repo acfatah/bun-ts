@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "codista.vscode-autosave",
+    "dbaeumer.vscode-eslint",
+    "ms-vscode.vscode-typescript-tslint-plugin",
+    "usernamehw.errorlens"
+  ]
+}
