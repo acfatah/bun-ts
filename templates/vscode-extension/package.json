@@ -71,18 +71,18 @@
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@types/bun": "latest",
-    "@types/glob": "^7.1.1",
-    "@types/mocha": "^9.1.0",
-    "@types/node": "^12.11.7",
-    "@types/vscode": "^1.37.0",
-    "@typescript-eslint/eslint-plugin": "^5.17.0",
-    "@typescript-eslint/parser": "^5.17.0",
+    "@types/glob": "^7.2.0",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "^12.20.55",
+    "@types/vscode": "^1.104.0",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
     "eslint": "^9.36.0",
     "eslint-plugin-format": "^1.0.2",
-    "glob": "^7.1.4",
-    "jiti": "^2.5.1",
+    "glob": "^7.2.3",
+    "jiti": "^2.6.0",
     "mocha": "^9.2.2",
-    "typescript": "^4.1.3",
-    "vscode-test": "^1.0.2"
+    "typescript": "^4.9.5",
+    "vscode-test": "^1.6.1"
   }
 }
