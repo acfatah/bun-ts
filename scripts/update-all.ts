@@ -11,6 +11,8 @@ import { join } from 'pathe'
 import { readDir } from './utils'
 
 const TARGET_DIR = 'templates'
+const argv = Array.isArray((Bun as any)?.argv) ? (Bun as any).argv.slice(2) : process.argv.slice(2)
+const useLatest = argv.includes('--latest')
 
 /**
  * Update dependencies in the given directory.
@@ -26,7 +28,11 @@ async function updateDeps(target: string | Dirent): Promise<void> {
   // Update packages
   console.log(`Updating "${pathName}"`)
 
-  const proc = Bun.spawn(['bun', 'update', '--latest'], {
+  const args = ['bun', 'update'] as string[]
+  if (useLatest)
+    args.push('--latest')
+
+  const proc = Bun.spawn(args, {
     cwd: path,
     // Avoid backpressure: stream directly to terminal
     stdout: 'inherit',
