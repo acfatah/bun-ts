@@ -35,7 +35,7 @@
     "release": "bunx --bun bumpp --excute=\"bun install\""
   },
   "peerDependencies": {
-    "@typescript/native-preview": "^7.0.0-dev.20250710.1"
+    "@typescript/native-preview": "^7.0.0-dev.20250924.1"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^5.4.1",
