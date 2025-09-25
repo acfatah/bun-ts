@@ -57,7 +57,7 @@ rm -rf .git/hooks && bunx --bun simple-git-hooks
 5. Initial commit
 
 ```bash
-git commit -m --no-verify "Initial commit"
+git commit --no-verify -m "Initial commit"
 ```
 
 To build the package, run:
