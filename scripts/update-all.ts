@@ -10,7 +10,7 @@ import process from 'node:process'
 import { join } from 'pathe'
 import { readDir } from './utils'
 
-const TARGET_DIR = 'templates'
+const TARGET_DIRS = ['templates']
 const argv = Array.isArray((Bun as any)?.argv) ? (Bun as any).argv.slice(2) : process.argv.slice(2)
 const useLatest = argv.includes('--latest')
 
@@ -71,20 +71,22 @@ async function main() {
   await Bun.$`bun --version > .bun-version`
   await updateDeps('.')
 
-  const dir = await readDir(TARGET_DIR, {
-    withFileTypes: true,
-  }) as Dirent[]
+  for (const targetDir of TARGET_DIRS) {
+    const dir = await readDir(targetDir, {
+      withFileTypes: true,
+    }) as Dirent[]
 
-  // Run sequentially to avoid backpressure and resource spikes
-  for (const dirent of dir) {
-    if (!dirent.isDirectory())
-      continue
+    // Run sequentially to avoid backpressure and resource spikes per template set
+    for (const dirent of dir) {
+      if (!dirent.isDirectory())
+        continue
 
-    try {
-      await updateDeps(dirent)
-    }
-    catch (error) {
-      console.error(`An error occurred during the update of "${join(dirent.parentPath, dirent.name)}":`, error)
+      try {
+        await updateDeps(dirent)
+      }
+      catch (error) {
+        console.error(`An error occurred during the update of "${join(dirent.parentPath, dirent.name)}":`, error)
+      }
     }
   }
 
