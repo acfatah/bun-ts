@@ -48,15 +48,15 @@
     "release": "bunx --bun bumpp --excute=\"bun install\""
   },
   "peerDependencies": {
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^5.4.1",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
-    "@types/bun": "^1.2.22",
-    "bumpp": "^10.2.3",
-    "eslint": "^9.36.0",
+    "@types/bun": "^1.2.23",
+    "bumpp": "^10.3.1",
+    "eslint": "^9.37.0",
     "eslint-plugin-format": "^1.0.2",
     "simple-git-hooks": "^2.13.1"
   },
