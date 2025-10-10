@@ -38,24 +38,32 @@
 - Start with specific tests near changed code, then broaden.
 - Don’t fix unrelated broken tests.
 
-## Documentation or Comments
+## Code Comments
 
 - Limit lines around 80 characters. Insert line breaks with correct indents so line
   stays between 80 characters.
 - Be concise, use bullets.
-- Use markdown formatting for code snippets and commands.
+- Use fenced block for code snippets and commands.
 - Wrap commands, file paths, env vars, and code identifiers in backticks.
-- Use tables in documentation whenever helpful.
+
+## Documentation
+
+- Use markddown formatting.
+- Limit lines around 80 characters. Insert line breaks with correct indents so line
+  stays between 80 characters.
+- Be concise, use bullets.
+- Wrap commands, file paths, env vars, and code identifiers in backticks.
+- Use bullets and short sections for scanability.
+- Use tables whenever helpful.
+- Use fenced block for code snippets and commands.
+- Wrap commands, file paths, env vars, and code identifiers in backticks.
 
 ## Response & Output Style
 
+- Formatting is the same as Documentation above.
 - Be concise and friendly; prioritize actionable guidance.
 - Use what, why, and how to explain concepts.
 - Include tips, gotchas, and common pitfalls; something that need to be aware of.
-- Use bullets and short sections for scanability.
-- Use tables whenever helpful.
-- Use markdown formatting for code snippets and commands.
-- Wrap commands, file paths, env vars, and code identifiers in backticks.
 - Provide bash-ready commands in fenced blocks when giving steps.
 - When editing code, prefer minimal diffs and preserve existing style.
 - If you create multiple files or non-trivial code, include a short run/test snippet.
