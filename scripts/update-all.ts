@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 
 /**
- * Script to update all Bun templates in the 'templates' directory.
+ * Script to update all TARGET_DIRS.
  */
 
 import type { Dirent } from 'node:fs'
@@ -11,13 +11,13 @@ import { join } from 'pathe'
 import { readDir } from './utils'
 
 const TARGET_DIRS = ['templates']
-const argv = Array.isArray((Bun as any)?.argv) ? (Bun as any).argv.slice(2) : process.argv.slice(2)
+const argv = Array.isArray(Bun?.argv) ? Bun.argv.slice(2) : process.argv.slice(2)
 const useLatest = argv.includes('--latest')
 
 /**
  * Update dependencies in the given directory.
  */
-async function updateDeps(target: string | Dirent): Promise<void> {
+async function updateDeps(target: string | Dirent) {
   const path = typeof target === 'string' ? target : join(target.parentPath, target.name)
   const versionFile = join(path, '.bun-version')
   const pathName = path === '.' ? 'root' : `"${path}"`
@@ -28,7 +28,7 @@ async function updateDeps(target: string | Dirent): Promise<void> {
   // Update packages
   console.log(`Updating "${pathName}"`)
 
-  const args = ['bun', 'update'] as string[]
+  const args = ['bun', 'update']
   if (useLatest)
     args.push('--latest')
 
@@ -74,7 +74,7 @@ async function main() {
   for (const targetDir of TARGET_DIRS) {
     const dir = await readDir(targetDir, {
       withFileTypes: true,
-    }) as Dirent[]
+    })
 
     // Run sequentially to avoid backpressure and resource spikes per template set
     for (const dirent of dir) {
@@ -93,4 +93,4 @@ async function main() {
   console.log('All updates completed.')
 }
 
-main()
+void main()

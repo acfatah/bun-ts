@@ -25,17 +25,18 @@ export async function readDir(
  */
 export async function readFile(filepath: string, _options = {}) {
   const file = Bun.file(filepath)
+  const fileExists = await file.exists()
 
-  if (!file.exists())
+  if (!fileExists)
     throw new Error(`The path "${filepath}" does not exists.`)
 
-  return await file.text()
+  return file.text()
 }
 
 /**
  * Simple readLine
  */
-export function readLine(): Promise<string> {
+export async function readLine(): Promise<string> {
   return new Promise((resolve) => {
     const rl = Readline.createInterface({
       input: process.stdin,
@@ -54,8 +55,7 @@ export function readLine(): Promise<string> {
  */
 export async function writeFile(
   destination: string,
-  data: string | Blob | BlobPart[] | ArrayBufferLike | NodeJS.TypedArray | ArrayBufferLike,
+  data: string | Blob | ArrayBufferLike | NodeJS.TypedArray | Uint8Array,
 ) {
-  // @ts-expect-error Bunfile type mismatch
-  Bun.write(destination, data)
+  await Bun.write(destination, data)
 }

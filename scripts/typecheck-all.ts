@@ -64,15 +64,31 @@ async function typecheckApp(
 async function getScriptNameIfExists(appPath: string): Promise<TypecheckScript | null> {
   try {
     const pkgFile = Bun.file(join(appPath, 'package.json'))
+    const pkgFileExists = await pkgFile.exists()
 
-    if (!(await pkgFile.exists()))
+    if (!pkgFileExists)
       return null
 
-    const json = await pkgFile.json()
-    const scripts = (json && json.scripts) || {}
-    const desired = tsgo ? 'typecheck:tsgo' : 'typecheck'
+    const raw = await pkgFile.json() as Record<string, unknown>
+    if (typeof raw !== 'object' || raw === null)
+      return null
 
-    return scripts[desired] ? desired : null
+    const scripts = (raw as { scripts?: Record<string, string> }).scripts
+    if (!scripts || typeof scripts !== 'object')
+      return null
+
+    const desired = tsgo ? 'typecheck:tsgo' : 'typecheck'
+    const scriptValue = scripts[desired]
+
+    if (
+      scriptValue === undefined
+      || typeof scriptValue !== 'string'
+      || scriptValue.trim().length === 0
+    ) {
+      return null
+    }
+
+    return desired
   }
   catch {
     return null
@@ -111,4 +127,4 @@ async function main() {
   console.log('All typechecks completed.')
 }
 
-main()
+void main()

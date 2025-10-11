@@ -18,7 +18,6 @@
  *   bun scripts/copy-common-to-templates.ts src/middleware
  */
 
-import type { Dirent } from 'node:fs'
 import Bun from 'bun'
 import { readFile as fsReadFile, mkdir, readdir, stat } from 'node:fs/promises'
 import process from 'node:process'
@@ -29,7 +28,12 @@ import { writeFile as bunWriteFile } from './utils'
 const TEMPLATES_DIR = 'templates'
 const BASE_DIR = join(TEMPLATES_DIR, '_')
 
-const argv = Array.isArray((Bun as any)?.argv) ? (Bun as any).argv.slice(2) : process.argv.slice(2)
+function isStringArray(x: unknown): x is string[] {
+  return Array.isArray(x) && x.every(item => typeof item === 'string')
+}
+
+// Ensure we pass only actual flags (exclude bun binary and script path)
+const argv = isStringArray(Bun.argv) ? Bun.argv.slice(2) : process.argv.slice(2)
 const { values, positionals } = parseArgs({
   args: argv,
   strict: true,
@@ -54,7 +58,7 @@ const NO_COLOR_FLAG = Boolean(values['no-color'] || values.noColor)
 const FORCE_COLOR_FLAG = Boolean(values.color)
 const NO_COLOR_ENV = Boolean(process.env.NO_COLOR)
 const FORCE_COLOR_ENV = Boolean(process.env.FORCE_COLOR)
-const isStdoutTTY = Boolean((process.stdout as any)?.isTTY)
+const isStdoutTTY = Boolean((process.stdout as { isTTY?: boolean })?.isTTY)
 const COLOR_ENABLED = (!NO_COLOR_FLAG && !NO_COLOR_ENV) && (FORCE_COLOR_FLAG || FORCE_COLOR_ENV || isStdoutTTY)
 
 // Gather raw positional args (will be interpreted later inside main())
@@ -104,7 +108,7 @@ function shouldIgnorePath(p: string, extraDirs: string[] = []) {
 async function walkFiles(root: string, extraDirs: string[] = []): Promise<string[]> {
   const out: string[] = []
   async function walk(dir: string) {
-    const entries = await readdir(dir, { withFileTypes: true }) as Dirent[]
+    const entries = await readdir(dir, { withFileTypes: true })
     for (const ent of entries) {
       const full = join(dir, ent.name)
       if (shouldIgnorePath(full, extraDirs))
@@ -155,11 +159,11 @@ async function main() {
     subDir = values.dir
   }
   else if (POSITIONALS.length > 0) {
-    const candidate = POSITIONALS[0]
+    const candidate = POSITIONALS[0] ?? ''
     // Heuristic: treat as directory if it exists as a directory under BASE_DIR OR looks like a folder (ends with '/')
     const normalizedCandidate = candidate.replace(/\/+$/, '')
     let isDir = false
-    if (candidate.endsWith('/')) {
+    if (candidate?.endsWith('/')) {
       isDir = true
     }
     else {
@@ -205,7 +209,7 @@ async function main() {
     throw new Error(`--dir must point inside '_' (templates/_). Got: ${subDir}`)
 
   // Find target template dirs (exclude _)
-  const dirs = (await readdir(TEMPLATES_DIR, { withFileTypes: true }) as Dirent[])
+  const dirs = (await readdir(TEMPLATES_DIR, { withFileTypes: true }))
     .filter(d => d.isDirectory())
     .map(d => join(TEMPLATES_DIR, d.name))
     .filter(d => d !== BASE_DIR)
@@ -220,7 +224,7 @@ async function main() {
       dirsToIgnore = ig
         .split(/\r?\n/)
         .map(l => l.trim())
-        .filter(l => l && !l.startsWith('#') && l.endsWith('/'))
+        .filter(l => l.length > 0 && !l.startsWith('#') && l.endsWith('/'))
         .map(l => l.replace(/\/+/, '').replace(/\/$/, ''))
     }
     catch {}
