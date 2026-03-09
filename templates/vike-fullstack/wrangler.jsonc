@@ -1,0 +1,14 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "my-app",
+  "compatibility_date": "2025-09-06",
+  "main": "virtual:photon:cloudflare:server-entry",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "MY_VIKE_DEMO_DATABASE",
+      "database_id": "my-vike-demo-database",
+      "migrations_dir": "database/migrations"
+    }
+  ]
+}

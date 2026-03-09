@@ -1,0 +1,42 @@
+{
+  "scripts": {
+    "dev": "vike dev",
+    "build": "vike build",
+    "preview": "vike build && vike preview",
+    "drizzle:generate": "drizzle-kit generate",
+    "drizzle:migrate": "wrangler d1 migrations apply MY_VIKE_DEMO_DATABASE --local",
+    "drizzle:studio": "drizzle-kit studio",
+    "lint": "eslint .",
+    "deploy": "vike build && wrangler deploy",
+    "generate-types": "wrangler types"
+  },
+  "dependencies": {
+    "@photonjs/cloudflare": "^0.1.13",
+    "@photonjs/hono": "^0.1.12",
+    "dotenv": "^17.3.1",
+    "drizzle-kit": "^0.31.9",
+    "drizzle-orm": "^0.45.1",
+    "hono": "^4.12.3",
+    "vike": "^0.4.255",
+    "vike-photon": "^0.1.24",
+    "vike-vue": "^0.9.11",
+    "vue": "^3.5.29"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.3",
+    "@tailwindcss/vite": "^4.2.1",
+    "@types/node": "^20.19.30",
+    "@universal-middleware/core": "^0.4.17",
+    "@vitejs/plugin-vue": "^6.0.4",
+    "eslint": "^9.39.3",
+    "eslint-plugin-vue": "^10.8.0",
+    "globals": "^17.4.0",
+    "tailwindcss": "^4.2.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.56.1",
+    "vite": "^7.3.1",
+    "vue-eslint-parser": "^10.4.0",
+    "wrangler": "^4.69.0"
+  },
+  "type": "module"
+}
